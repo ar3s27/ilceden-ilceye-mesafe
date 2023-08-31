@@ -1,5 +1,8 @@
 import pandas as pd
-import numpy as np
-
 df = pd.read_csv("ilcelerMesafeDonusturulmus.csv")
-print(df.head(10))
+
+def getir(k_il, k_ilce, v_il, v_ilce):
+    veri = df[(df['k_il'] == k_il) & (df['k_ilce'] == k_ilce) & 
+              (df['v_il'] == v_il) & (df['v_ilce'] == v_ilce)]
+    if(veri == True):
+        

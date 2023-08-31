@@ -14,7 +14,7 @@ def get_total_length(data_file, k_il, k_ilce, v_il, v_ilce):
     return total_length
 
 # CSV dosyasının adı
-csv_file = 'ilcelerMesafeDonusturulmus.csv'
+csv_file = 'ilcelerDonusturuldu.csv'
 
 # Değerler
 k_il = 'ADANA'

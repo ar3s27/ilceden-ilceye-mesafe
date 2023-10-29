@@ -22,7 +22,10 @@ def mesafeGetir(k_il: str, k_ilce: str, v_il: str, v_ilce: str):
         veri = df[(df['k_il'] == k_il) & (df['k_ilce'] == k_ilce) & 
                   (df['v_il'] == v_il) & (df['v_ilce'] == v_ilce)]
         mesafe = veri["Toplam Uzunluk(km)"].sum()
-        return {"mesafe": mesafe}
+
+        # Mesafeyi metin olarak biçimlendir
+        mesafe_metni = f"{k_il} İLİNİN {k_ilce} İLÇESİNDEN {v_il} İLİNİN {v_ilce} İLÇESİNE OLAN MESAFE: {int(mesafe)} KM"
+        return {mesafe_metni}
     except Exception as e:
         return {"error": str(e)}
 

@@ -10,16 +10,30 @@ app.add_middleware(
     allow_origins=['*']
 )
 
+# Türkçe karakterleri büyük harfe çevirmek için bir işlev
+def turkce_buyuk_harf_cevir(metin):
+    harf_cevir = {
+        'i': 'İ',
+        'ı': 'I',
+        'ğ': 'Ğ',
+        'ü': 'Ü',
+        'ş': 'Ş',
+        'ö': 'Ö',
+        'ç': 'Ç'
+    }
+
+    return ''.join(harf_cevir.get(harf, harf.upper()) for harf in metin)
+
 df = pd.read_csv("ilcelerDonusturuldu.csv")
 
 @app.get('/mesafe/{k_il}/{k_ilce}/{v_il}/{v_ilce}')
 def mesafeGetir(k_il: str, k_ilce: str, v_il: str, v_ilce: str):
     try:
         # Girişleri büyük harfe çevirin
-        k_il = k_il.upper()
-        k_ilce = k_ilce.upper()
-        v_il = v_il.upper()
-        v_ilce = v_ilce.upper()
+        k_il = turkce_buyuk_harf_cevir(k_il)
+        k_ilce = turkce_buyuk_harf_cevir(k_ilce)
+        v_il = turkce_buyuk_harf_cevir(v_il)
+        v_ilce = turkce_buyuk_harf_cevir(v_ilce)
 
         veri = df[(df['k_il'] == k_il) & (df['k_ilce'] == k_ilce) & 
                   (df['v_il'] == v_il) & (df['v_ilce'] == v_ilce)]

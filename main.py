@@ -25,7 +25,7 @@ def mesafeGetir(k_il: str, k_ilce: str, v_il: str, v_ilce: str):
 
         # Mesafeyi metin olarak biçimlendir
         mesafe_metni = f"{k_il} İLİNİN {k_ilce} İLÇESİNDEN {v_il} İLİNİN {v_ilce} İLÇESİNE OLAN MESAFE: {int(mesafe)} KM"
-        return {mesafe_metni}
+        return {"mesafe": mesafe_metni}
     except Exception as e:
         return {"error": str(e)}
 

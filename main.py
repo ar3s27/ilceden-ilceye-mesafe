@@ -15,10 +15,12 @@ df = pd.read_csv("ilcelerDonusturuldu.csv")
 @app.get('/mesafe/{k_il}/{k_ilce}/{v_il}/{v_ilce}')
 def mesafeGetir(k_il: str, k_ilce: str, v_il: str, v_ilce: str):
     try:
+        # Girişleri büyük harfe çevirin
         k_il = k_il.upper()
         k_ilce = k_ilce.upper()
         v_il = v_il.upper()
         v_ilce = v_ilce.upper()
+
         veri = df[(df['k_il'] == k_il) & (df['k_ilce'] == k_ilce) & 
                   (df['v_il'] == v_il) & (df['v_ilce'] == v_ilce)]
         mesafe = veri["Toplam Uzunluk(km)"].sum()

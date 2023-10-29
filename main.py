@@ -1,20 +1,30 @@
+﻿# -*- coding: utf-8 -*-
+import uvicorn
 import pandas as pd
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI(title="Mesafe")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*']
+)
+
 df = pd.read_csv("ilcelerDonusturuldu.csv")
 
-def mesafeGetir(k_il, k_ilce, v_il, v_ilce):
-    veri = df[(df['k_il'] == k_il) & (df['k_ilce'] == k_ilce) & 
-              (df['v_il'] == v_il) & (df['v_ilce'] == v_ilce)]
-    
-    mesafe = veri["Toplam Uzunluk(km)"].sum()
-    return mesafe
+@app.get('/mesafe/{k_il}/{k_ilce}/{v_il}/{v_ilce}')
+def mesafeGetir(k_il: str, k_ilce: str, v_il: str, v_ilce: str):
+    try:
+        k_il = k_il.upper()
+        k_ilce = k_ilce.upper()
+        v_il = v_il.upper()
+        v_ilce = v_ilce.upper()
+        veri = df[(df['k_il'] == k_il) & (df['k_ilce'] == k_ilce) & 
+                  (df['v_il'] == v_il) & (df['v_ilce'] == v_ilce)]
+        mesafe = veri["Toplam Uzunluk(km)"].sum()
+        return {"mesafe": mesafe}
+    except Exception as e:
+        return {"error": str(e)}
 
-#Değerler
-konum_il = 'SİİRT'
-konum_ilce = 'TİLLO'
-varis_il = 'HAKKARİ'
-varis_ilce = 'YÜKSEKOVA'
-
-# Fonksiyonu çağır ve sonucu yazdır
-sonuc = mesafeGetir(konum_il,konum_ilce,varis_il,varis_ilce)
-print(f"Karşılık gelen toplam uzunluk: {sonuc} km")
-print(f"{konum_il} İlinin {konum_ilce} İlçesinden {varis_il} İlinin {varis_ilce} İlçesine Olan Mesafe: {sonuc} km")
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=6060)

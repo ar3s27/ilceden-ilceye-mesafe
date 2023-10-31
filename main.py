@@ -1,5 +1,4 @@
 ﻿# -*- coding: utf-8 -*-
-import uvicorn
 import pandas as pd
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -44,6 +43,3 @@ def mesafeGetir(k_il: str, k_ilce: str, v_il: str, v_ilce: str):
         return {"mesafe": mesafe_metni}
     except Exception as e:
         return {"error": str(e)}
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=6060)

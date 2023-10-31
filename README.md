@@ -1,2 +1,2 @@
 # ilceden-ilceye-mesafe
- ilçeler arası mesafe hesaplama
+ İller ve İlçeleri Girilerek Aralarındakı mesafeyi kullancıya bildiren bir API

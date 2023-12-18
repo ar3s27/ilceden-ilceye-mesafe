@@ -23,7 +23,7 @@ def turkce_buyuk_harf_cevir(metin):
     }
     return ''.join(harf_cevir.get(harf, harf.upper()) for harf in metin)
 
-df = pd.read_csv("ilcelerDonusturuldu.csv")
+df = pd.read_csv("ilcelerDonusturuldu_kucukharf.csv")
 
 @app.get('/mesafe/{k_il}/{k_ilce}/{v_il}/{v_ilce}')
 def mesafeGetir(k_il: str, k_ilce: str, v_il: str, v_ilce: str):

@@ -2,6 +2,7 @@
 import pandas as pd
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from urllib.parse import unquote
 
 app = FastAPI(title="Mesafe")
 app.add_middleware(
@@ -20,7 +21,6 @@ def turkce_buyuk_harf_cevir(metin):
         'ö': 'Ö',
         'ç': 'Ç'
     }
-
     return ''.join(harf_cevir.get(harf, harf.upper()) for harf in metin)
 
 df = pd.read_csv("ilcelerDonusturuldu.csv")
@@ -38,8 +38,10 @@ def mesafeGetir(k_il: str, k_ilce: str, v_il: str, v_ilce: str):
                   (df['v_il'] == v_il) & (df['v_ilce'] == v_ilce)]
         mesafe = veri["Toplam Uzunluk(km)"].sum()
 
-        # Mesafeyi metin olarak biçimlendir
+        # Mesafeyi metin olarak biçimlendir ve URL decode yap
         mesafe_metni = f"{k_il} İLİNİN {k_ilce} İLÇESİNDEN {v_il} İLİNİN {v_ilce} İLÇESİNE OLAN MESAFE: {int(mesafe)} KM"
+        mesafe_metni = unquote(mesafe_metni)
+        
         return {"mesafe": mesafe_metni}
     except Exception as e:
         return {"error": str(e)}

@@ -38,9 +38,9 @@ def mesafeGetir(k_il: str, k_ilce: str, v_il: str, v_ilce: str):
                   (df['v_il'] == v_il) & (df['v_ilce'] == v_ilce)]
         mesafe = veri["Toplam Uzunluk(km)"].sum()
 
-        # Mesafeyi metin olarak biçimlendir ve URL decode yap
+        # Mesafeyi metin olarak biçimlendir ve URL kodlamasını çöz
         mesafe_metni = f"{k_il} İLİNİN {k_ilce} İLÇESİNDEN {v_il} İLİNİN {v_ilce} İLÇESİNE OLAN MESAFE: {int(mesafe)} KM"
-        mesafe_metni = unquote(mesafe_metni)
+        mesafe_metni = unquote(mesafe_metni).encode('latin-1').decode('utf-8')
         
         return {"mesafe": mesafe_metni}
     except Exception as e:
